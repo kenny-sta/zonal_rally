@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zonal Rally Program</title>
+    <link rel="shortcut icon" href="WhatsApp Image 2024-07-06 at 9.26.03 AM.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+    <header>
+        <h1>Zonal Rally Program</h1>
+        <p>Next Gen Program: 3rd August</p>
+        <p>Main Program: 9th - 11th August</p>
+    </header>
+    
+    <section class="banner">
+        <img src="WhatsApp Image 2024-07-06 at 9.26.03 AM.jpeg" alt="Banner Image" class="banner">
+    </section>
+    
+    <section class="writer-nav">
+        <h2>Select a Topic:</h2>
+        <ul>
+            <li><a href="#topic-1">Topic 1 (Writer 1)</a></li>
+            <li><a href="#topic-2">Topic 2 (Writer 2)</a></li>
+            <li><a href="#topic-3">Topic 3 (Writer 3)</a></li>
+        </ul>
+    </section>
+    
+    <section class="write-ups">
+        <div class="write-up" id="topic-1">
+            <h3>Topic 1</h3>
+            <p>Content of writer 1 goes here...</p>
+        </div>
+        <div class="write-up" id="topic-2">
+            <h3>Topic 2</h3>
+            <p>Content of writer 2 goes here...</p>
+        </div>
+        <div class="write-up" id="topic-3">
+            <h3>Topic 3</h3>
+            <p>Content of writer 3 goes here...</p>
+        </div>
+    </section>
+    
+    <section class="register">
+        <h2>Register for the Event</h2>
+        <form class="register-form" id="register-form">
+            <img class="high" src="WhatsApp Image 2024-07-06 at 9.26.03 AM.jpeg" alt="Banner Image" class="banner">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="text" name="phone" placeholder="Your Phone Number" required>
+            <input type="text" name="religion" placeholder="Your Religion" required>
+            <button type="submit">Register</button>
+       
+        </form>
+        <p id="registration-message" style="color: rgb(157, 255, 0);"></p>
+    </section>
+    
+    <section class="upcoming-events">
+        <h2>Upcoming Events</h2>
+        <p id="event-message"></p>
+    </section>
+    
+    <section class="gallery">
+        <h2>Event Highlights</h2>
+        <p>Stay tuned for pictures from the event!</p>
+    
+
+        <!-- More images can be added similarly -->
+    </section>
+    
+    <section class="videos">
+        <h2>Event Videos</h2>
+        <p>Stay tuned for videos from the event!</p>
+        <iframe data-src="https://www.youtube.com/embed/example1" frameborder="0" allowfullscreen style="display:none;" class="lazy"></iframe>
+        <a href="https://www.youtube.com/embed/example1" download="Video 1" class="download-link" style="display:none;">Download Video 1</a>
+        <!-- More videos can be added similarly -->
+    </section>
+    
+    <section class="audios">
+        <h2>Audio Sermons</h2>
+        <p>Stay tuned for audio sermons from the event!</p>
+        <audio controls style="display:none;" class="lazy">
+            <source data-src="sermon1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <a href="sermon1.mp3" download="Sermon 1" class="download-link" style="display:none;">Download Sermon 1</a>
+        <!-- More audio files can be added similarly -->
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 Zonal Rally Program. All rights reserved.</p>
+    </footer>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const expirationDate = new Date();
+        expirationDate.setMonth(expirationDate.getMonth() + 1); // Set expiration date one month from now
+
+        const today = new Date();
+        const eventMessage = document.getElementById('event-message');
+        const registrationMessage = document.getElementById('registration-message');
+        const registerForm = document.getElementById('register-form');
+
+        if (today.getFullYear() === 2024 && today.getMonth() === 7) { // August is month 7 (0-indexed)
+            if (today.getDate() === 3) {
+                eventMessage.textContent = 'Today is the Next Gen Program!';
+            } else if (today.getDate() >= 9 && today.getDate() <= 11) {
+                eventMessage.textContent = 'Today is part of the Main Program!';
+            } else {
+                eventMessage.textContent = 'Join us for upcoming events!';
+            }
+        } else {
+            eventMessage.textContent = 'Join us for upcoming events!';
+        }
+
+    
+            // Lazy load images, videos, and audios
+            const lazyElements = document.querySelectorAll('.lazy');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        if (element.tagName === 'IMG' || element.tagName === 'IFRAME' || element.tagName === 'SOURCE') {
+                            element.src = element.dataset.src;
+                        }
+                        element.style.display = 'block';
+                        observer.unobserve(element);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+    
+            lazyElements.forEach(element => observer.observe(element));
+    
+            // Show downloadable content after events
+            if (today > new Date(2024, 6, 7)) { // After 11th August
+                const downloadableElements = document.querySelectorAll('.downloadable, .download-link');
+                downloadableElements.forEach(element => {
+                    element.style.display = 'block';
+                });
+            }
+    
+            // Handle form submission
+            registerForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(registerForm);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const phone = formData.get('phone');
+                const religion = formData.get('religion');
+    
+                if (localStorage.getItem(email)) {
+                    registrationMessage.textContent = 'You have already registered with this email.';
+                    return;
+                }
+    
+                localStorage.setItem(email, JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    religion: religion,
+                    registeredAt: new Date().toISOString()
+                }));
+    
+                registrationMessage.textContent = 'Registration successful!. Thank you for registering for the Zonal Rally Program';
+            });
+        });
+        
+    </script>
